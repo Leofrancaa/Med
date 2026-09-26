@@ -53,8 +53,8 @@ Controles possuem foco visível. Cores complementam rótulos, nunca substituem v
 
 ## Renda e celular
 
-A seção de renda diferencia visualmente o valor de um edital (fonte externa verificável), os valores digitados na simulação e a ausência de média por especialidade. Em celular, as especialidades viram cartões com todos os critérios e um botão de comparação de 40px; a tabela permanece para desktop.
+A seção de renda diferencia visualmente o valor de um edital, as médias líquidas autodeclaradas por especialidade com ano e amostra, os valores digitados na simulação e a ausência de média individual publicada. Em celular, as especialidades viram cartões com todos os critérios e um botão de comparação de 40px; a tabela de renda permite rolagem horizontal.
 
 ## Data integrity
 
-Distribuição regional e bolsa são dados relatados pela pesquisa. O histograma de formação é calculado das 30 áreas. Faixas de carga semanal, potencial de qualidade de vida, absorção, telemedicina e exposição de tarefas à IA são avaliações analíticas; não são taxas oficiais. O relatório não oferece série comparável de renda total por especialidade.
+Distribuição regional e bolsa são dados relatados pela pesquisa. O histograma de formação é calculado das 30 áreas. Faixas de carga semanal, potencial de qualidade de vida, absorção, telemedicina e exposição de tarefas à IA são avaliações analíticas; não são taxas oficiais. As pesquisas Afya cobrem individualmente nove das 30 áreas do painel, em 2022–2023. A média do grupo cirúrgico permanece separada das especialidades. As demais áreas não recebem valor inferido.

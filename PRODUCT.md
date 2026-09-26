@@ -27,7 +27,7 @@ O usuário explora 30 especialidades e pode consultar cenários de custo de cons
 - Pesquisa e filtros das especialidades; comparação lado a lado; indicadores de contexto com escopo e classe de evidência visíveis.
 - Interface em português do Brasil, adaptada a celular e desktop.
 - Leitura pública do banco Supabase com RLS; alterações de dados são administrativas e não fazem parte do dashboard.
-- Não inventar renda média, taxa de emprego, nota de corte comparável, prazo até contratação ou burnout por especialidade. Um edital com salário bruto e jornada pode servir de exemplo de vínculo, desde que sua origem e seus limites apareçam juntos.
+- Mostrar renda média líquida por especialidade somente quando publicada em pesquisa identificável, com ano e tamanho do recorte. Manter ausentes as áreas sem média individual. Um edital com salário bruto e jornada pode servir de exemplo de vínculo, desde que sua origem e seus limites apareçam juntos.
 - Custos de consultório são cenários analíticos de Salvador em valores nominais de 2026, sem imóvel, pró-labore, impostos e financiamento.
 - Nunca colocar a senha do banco no repositório nem no cliente web.
 

@@ -1,0 +1,20 @@
+[
+  {"id":"2023-medicina-intensiva","specialty_slug":"medicina-intensiva","group_name":null,"reference_year":2023,"mean_net_monthly_brl":32163,"respondent_count":37},
+  {"id":"2023-cardiologia","specialty_slug":"cardiologia","group_name":null,"reference_year":2023,"mean_net_monthly_brl":29970,"respondent_count":162},
+  {"id":"2023-ginecologia-e-obstetricia","specialty_slug":"ginecologia-e-obstetricia","group_name":null,"reference_year":2023,"mean_net_monthly_brl":27062,"respondent_count":97},
+  {"id":"2023-psiquiatria","specialty_slug":"psiquiatria","group_name":null,"reference_year":2023,"mean_net_monthly_brl":25743,"respondent_count":64},
+  {"id":"2023-pediatria","specialty_slug":"pediatria","group_name":null,"reference_year":2023,"mean_net_monthly_brl":24792,"respondent_count":132},
+  {"id":"2023-endocrinologia-e-metabologia","specialty_slug":"endocrinologia-e-metabologia","group_name":null,"reference_year":2023,"mean_net_monthly_brl":22664,"respondent_count":61},
+  {"id":"2023-clinica-medica","specialty_slug":"clinica-medica","group_name":null,"reference_year":2023,"mean_net_monthly_brl":22084,"respondent_count":102},
+  {"id":"2023-medicina-de-familia-e-comunidade","specialty_slug":"medicina-de-familia-e-comunidade","group_name":null,"reference_year":2023,"mean_net_monthly_brl":21624,"respondent_count":117},
+  {"id":"2023-grupo-cirurgico","specialty_slug":null,"group_name":"Especialidades cirúrgicas (cirurgia, oftalmologia, otorrinolaringologia e urologia)","reference_year":2023,"mean_net_monthly_brl":32709,"respondent_count":96},
+  {"id":"2022-cardiologia","specialty_slug":"cardiologia","group_name":null,"reference_year":2022,"mean_net_monthly_brl":24263.77,"respondent_count":472},
+  {"id":"2022-ginecologia-e-obstetricia","specialty_slug":"ginecologia-e-obstetricia","group_name":null,"reference_year":2022,"mean_net_monthly_brl":20933.33,"respondent_count":150},
+  {"id":"2022-endocrinologia-e-metabologia","specialty_slug":"endocrinologia-e-metabologia","group_name":null,"reference_year":2022,"mean_net_monthly_brl":20188.17,"respondent_count":93},
+  {"id":"2022-psiquiatria","specialty_slug":"psiquiatria","group_name":null,"reference_year":2022,"mean_net_monthly_brl":19623.02,"respondent_count":126},
+  {"id":"2022-pediatria","specialty_slug":"pediatria","group_name":null,"reference_year":2022,"mean_net_monthly_brl":19386.16,"respondent_count":224},
+  {"id":"2022-dermatologia","specialty_slug":"dermatologia","group_name":null,"reference_year":2022,"mean_net_monthly_brl":18419.12,"respondent_count":68},
+  {"id":"2022-medicina-de-familia-e-comunidade","specialty_slug":"medicina-de-familia-e-comunidade","group_name":null,"reference_year":2022,"mean_net_monthly_brl":16214.29,"respondent_count":245},
+  {"id":"2022-clinica-medica","specialty_slug":"clinica-medica","group_name":null,"reference_year":2022,"mean_net_monthly_brl":15457.14,"respondent_count":175},
+  {"id":"2022-grupo-cirurgico","specialty_slug":null,"group_name":"Cirurgiões (grupo agregado da pesquisa)","reference_year":2022,"mean_net_monthly_brl":22151.64,"respondent_count":122}
+]
