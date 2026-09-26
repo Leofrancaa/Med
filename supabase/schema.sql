@@ -49,21 +49,39 @@ CREATE TABLE IF NOT EXISTS public.market_indicators (
   PRIMARY KEY (metric, geography, reference_year)
 );
 
+CREATE TABLE IF NOT EXISTS public.income_benchmarks (
+  id text PRIMARY KEY,
+  label text NOT NULL,
+  employer text NOT NULL,
+  geography text NOT NULL,
+  reference_year smallint NOT NULL CHECK (reference_year BETWEEN 2000 AND 2100),
+  monthly_gross_brl numeric(12,2) NOT NULL CHECK (monthly_gross_brl >= 0),
+  weekly_hours smallint NOT NULL CHECK (weekly_hours BETWEEN 1 AND 80),
+  specialty_scope text NOT NULL,
+  source_url text NOT NULL CHECK (source_url LIKE 'https://%'),
+  note text NOT NULL
+);
+
 CREATE INDEX IF NOT EXISTS specialties_training_years_idx ON public.specialties(total_training_years);
 CREATE INDEX IF NOT EXISTS market_indicators_geography_idx ON public.market_indicators(geography, reference_year);
 
 ALTER TABLE public.specialties ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.clinic_cost_scenarios ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.market_indicators ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.income_benchmarks ENABLE ROW LEVEL SECURITY;
 
 REVOKE ALL ON public.specialties, public.clinic_cost_scenarios, public.market_indicators FROM anon, authenticated;
 GRANT SELECT ON public.specialties, public.clinic_cost_scenarios, public.market_indicators TO anon, authenticated;
+REVOKE ALL ON public.income_benchmarks FROM anon, authenticated;
+GRANT SELECT ON public.income_benchmarks TO anon, authenticated;
 
 DROP POLICY IF EXISTS "Dashboard read specialties" ON public.specialties;
 DROP POLICY IF EXISTS "Dashboard read clinic costs" ON public.clinic_cost_scenarios;
 DROP POLICY IF EXISTS "Dashboard read indicators" ON public.market_indicators;
+DROP POLICY IF EXISTS "Dashboard read income benchmarks" ON public.income_benchmarks;
 CREATE POLICY "Dashboard read specialties" ON public.specialties FOR SELECT TO anon, authenticated USING (true);
 CREATE POLICY "Dashboard read clinic costs" ON public.clinic_cost_scenarios FOR SELECT TO anon, authenticated USING (true);
 CREATE POLICY "Dashboard read indicators" ON public.market_indicators FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "Dashboard read income benchmarks" ON public.income_benchmarks FOR SELECT TO anon, authenticated USING (true);
 
 COMMIT;

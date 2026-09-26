@@ -17,6 +17,7 @@ import {
   Plus,
   Search,
   SlidersHorizontal,
+  Wallet,
   X,
 } from "lucide-react";
 import {
@@ -48,6 +49,10 @@ function formatMoney(value: number) {
   return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }).format(value);
 }
 
+function formatMoneyExact(value: number) {
+  return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+}
+
 function metric(data: DashboardData, key: string, geography = "Brasil") {
   return data.indicators.find((item) => item.metric === key && item.geography === geography);
 }
@@ -55,6 +60,7 @@ function metric(data: DashboardData, key: string, geography = "Brasil") {
 function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen: boolean; setMobileOpen: (value: boolean) => void }) {
   const links = [
     { href: "#visao-geral", label: "Visão geral", icon: BarChart3 },
+    { href: "#renda", label: "Renda", icon: Wallet },
     { href: "#especialidades", label: "Especialidades", icon: GraduationCap },
     { href: "#comparar", label: "Comparar", icon: SlidersHorizontal },
     { href: "#metodologia", label: "Metodologia", icon: CircleHelp },
@@ -89,6 +95,44 @@ function MetricCard({ icon: Icon, label, value, detail }: { icon: typeof BarChar
       <small>{detail}</small>
     </div>
   );
+}
+
+function IncomeSection({ data }: { data: DashboardData }) {
+  const benchmark = data.incomeBenchmarks[0];
+  const [contract, setContract] = useState(String(benchmark?.monthly_gross_brl ?? 0));
+  const [shifts, setShifts] = useState("0");
+  const [shiftValue, setShiftValue] = useState("0");
+  const [privateRevenue, setPrivateRevenue] = useState("0");
+  const [expenses, setExpenses] = useState("0");
+  const amount = (value: string) => Math.max(0, Number(value) || 0);
+  const gross = amount(contract) + amount(shifts) * amount(shiftValue) + amount(privateRevenue);
+  const afterExpenses = gross - amount(expenses);
+
+  return <section className="income-section" id="renda" aria-labelledby="income-heading">
+    <div className="section-header"><div><span className="section-overline">Depois da residência</span><h2 id="income-heading">Quanto pode ganhar?</h2><p>Um salário de edital verificável e um cenário que você pode ajustar. Valores mensais antes de impostos.</p></div></div>
+    <div className="income-grid">
+      <div className="income-benchmark">
+        <div className="income-card-eyebrow"><Wallet size={17} aria-hidden="true" /> Referência de vínculo público</div>
+        <strong>{benchmark ? formatMoneyExact(Number(benchmark.monthly_gross_brl)) : "Sem referência"}</strong>
+        <span>brutos por mês · {benchmark?.weekly_hours ?? "—"}h/semana</span>
+        <p>{benchmark?.employer ?? "Ebserh"} · concurso nacional {benchmark?.reference_year ?? 2026} para cargos de médico especialista.</p>
+        {benchmark && <a href={benchmark.source_url} target="_blank" rel="noopener noreferrer">Consultar edital de origem <ArrowRight size={15} /></a>}
+        <small>Este é o valor de um cargo específico, não a média de renda dos especialistas nem uma promessa de contratação.</small>
+      </div>
+      <div className="income-calculator">
+        <div className="income-calculator-heading"><div><h3>Monte um cenário mensal</h3><p>Edite os valores para representar uma proposta ou plano de trabalho.</p></div><span className="evidence-tag evidence-analytic">Simulação</span></div>
+        <div className="income-fields">
+          <label>Vínculo mensal (R$)<input type="number" min="0" step="100" value={contract} onChange={(event) => setContract(event.target.value)} /></label>
+          <label>Plantões por mês<input type="number" min="0" max="40" step="1" value={shifts} onChange={(event) => setShifts(event.target.value)} /></label>
+          <label>Valor por plantão (R$)<input type="number" min="0" step="100" value={shiftValue} onChange={(event) => setShiftValue(event.target.value)} /></label>
+          <label>Receita particular (R$)<input type="number" min="0" step="100" value={privateRevenue} onChange={(event) => setPrivateRevenue(event.target.value)} /></label>
+          <label>Despesas profissionais (R$)<input type="number" min="0" step="100" value={expenses} onChange={(event) => setExpenses(event.target.value)} /></label>
+        </div>
+        <div className="income-result"><div><span>Recebimentos brutos</span><strong>{formatMoneyExact(gross)}</strong></div><div><span>Após despesas profissionais</span><strong>{formatMoneyExact(afterExpenses)}</strong></div></div>
+        <p className="income-disclaimer">Cálculo aritmético, antes de impostos e contribuições. Receita de consultório não equivale a salário ou lucro pessoal.</p>
+      </div>
+    </div>
+  </section>;
 }
 
 function RegionChart({ data }: { data: DashboardData }) {
@@ -187,6 +231,7 @@ function CostChart({ costs }: { costs: CostScenario[] }) {
 
 function SpecialtyTable({ specialties, selected, toggle }: { specialties: Specialty[]; selected: string[]; toggle: (slug: string) => void }) {
   return (
+    <>
     <div className="table-scroll">
       <table className="specialty-table">
         <thead><tr><th>Especialidade</th><th>Formação</th><th>Horas/sem.</th><th>Absorção*</th><th>Telemedicina*</th><th>IA: tarefas*</th><th><span className="sr-only">Comparar</span></th></tr></thead>
@@ -207,6 +252,18 @@ function SpecialtyTable({ specialties, selected, toggle }: { specialties: Specia
         </tbody>
       </table>
     </div>
+    <div className="specialty-cards" aria-label="Especialidades encontradas">
+      {specialties.map((item) => {
+        const added = selected.includes(item.slug);
+        const disabled = selected.length >= maxCompare && !added;
+        return <article className={`specialty-card ${added ? "specialty-card-selected" : ""}`} key={item.slug}>
+          <div className="specialty-card-head"><div><h3>{item.name}</h3><p>{item.work_settings}</p></div><button type="button" className={`row-action ${added ? "row-action-active" : ""}`} onClick={() => toggle(item.slug)} disabled={disabled} aria-pressed={added} aria-label={`${added ? "Remover" : "Adicionar"} ${item.name} ${added ? "da" : "à"} comparação`}>{added ? <Check size={17} /> : <Plus size={17} />}</button></div>
+          <div className="specialty-card-grid"><div><span>Formação total</span><strong>{item.total_training_years} anos</strong><small>{item.prerequisite === "clinica_medica" ? "após Clínica Médica" : item.prerequisite === "cirurgia_geral" ? "após Cirurgia Geral" : "acesso direto"}</small></div><div><span>Horas semanais*</span><strong>{item.weekly_hours_min}–{item.weekly_hours_max}h</strong></div></div>
+          <div className="specialty-card-facts"><span>Absorção*</span><strong>{item.market_absorption_proxy}</strong><span>Telemedicina*</span><strong>{item.telemedicine_potential}</strong><span>IA: tarefas*</span><strong>{item.ai_task_exposure}</strong><span>Potencial particular*</span><strong>{item.private_revenue_potential}</strong></div>
+        </article>;
+      })}
+    </div>
+    </>
   );
 }
 
@@ -219,7 +276,7 @@ function Comparison({ selected, remove, clear }: { selected: Specialty[]; remove
     { label: "Telemedicina", value: (item) => item.telemedicine_potential },
     { label: "Exposição de tarefas à IA", value: (item) => item.ai_task_exposure },
     { label: "Capital próprio necessário", value: (item) => item.capital_requirement },
-    { label: "Renda média total", value: () => "Não especificado" },
+    { label: "Renda média total por área", value: () => "Sem dado comparável" },
   ];
   return (
     <section id="comparar" className="compare-section">
@@ -272,8 +329,10 @@ export function Dashboard({ data }: { data: DashboardData }) {
         <MetricCard icon={GraduationCap} label="Especialidades analisadas" value={String(data.specialties.length)} detail="Áreas da pesquisa" />
         <MetricCard icon={Clock3} label="Tempo de formação" value="2–6 anos" detail="Conforme a especialidade" />
         <MetricCard icon={MapPinned} label="Especialistas no Brasil" value={specialistCount ? `${(Number(specialistCount.value) / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 1 })} mil` : "N/E"} detail="dezembro de 2024 · relatório" />
-        <MetricCard icon={Database} label="Bolsa-base mensal" value={stipend ? formatMoney(Number(stipend.value)) : "N/E"} detail="valor bruto · referência 2026" />
+        <MetricCard icon={Database} label="Bolsa-base mensal" value={stipend ? formatMoneyExact(Number(stipend.value)) : "N/E"} detail="valor bruto · referência 2026" />
       </section>
+
+      <IncomeSection data={data} />
 
       <section className="charts-section" aria-labelledby="data-heading">
         <div className="section-header"><div><span className="section-overline">Contexto em números</span><h2 id="data-heading">O que os dados mostram</h2><p>Gráficos com medidas disponíveis. Sem simular renda ou empregabilidade.</p></div></div>
@@ -297,7 +356,7 @@ export function Dashboard({ data }: { data: DashboardData }) {
 
       <Comparison selected={selectedItems} remove={toggle} clear={() => setSelected([])} />
 
-      <section className="method-section" id="metodologia"><div className="section-header"><div><span className="section-overline">Transparência</span><h2>Como ler este painel</h2><p>O relatório combina dados publicados, cenários construídos e lacunas que importam para a decisão.</p></div></div><div className="method-cards"><div><span className="method-dot blue" /><h3>Dado relatado</h3><p>Valores com localidade, ano e unidade, como bolsa e distribuição regional. Os marcadores internos da pesquisa ainda precisam ser ligados às fontes primárias.</p></div><div><span className="method-dot teal" /><h3>Estimativa analítica</h3><p>Faixas de horas, absorção, IA e qualidade de vida descrevem tendências de trabalho, sem precisão estatística.</p></div><div><span className="method-dot gray" /><h3>Não especificado</h3><p>Renda total comparável, empregabilidade, prazo até contratação, nota de corte nacional e burnout não têm série suficiente nesta pesquisa.</p></div></div></section>
+      <section className="method-section" id="metodologia"><div className="section-header"><div><span className="section-overline">Transparência</span><h2>Como ler este painel</h2><p>O relatório combina dados publicados, cenários construídos e lacunas que importam para a decisão.</p></div></div><div className="method-cards"><div><span className="method-dot blue" /><h3>Dado relatado</h3><p>Valores com localidade, ano e unidade, como bolsa e distribuição regional. O exemplo de remuneração vem de um edital oficial de 2026, indicado na seção de renda.</p></div><div><span className="method-dot teal" /><h3>Estimativa analítica</h3><p>Faixas de horas, absorção, IA e qualidade de vida descrevem tendências de trabalho, sem precisão estatística. A simulação de renda usa apenas os valores digitados.</p></div><div><span className="method-dot gray" /><h3>Não especificado</h3><p>Renda total comparável por especialidade, empregabilidade, prazo até contratação, nota de corte nacional e burnout não têm série suficiente nesta pesquisa.</p></div></div></section>
 
       <footer className="page-footer"><span>Med · Pesquisa organizada para escolha de residência</span><span>{formatNumber(data.specialties.length)} áreas · dados de referência 2024–2026</span></footer>
     </main>

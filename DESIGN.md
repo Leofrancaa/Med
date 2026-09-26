@@ -51,6 +51,10 @@ Manrope para títulos e valores principais; Inter para texto e controles. Valore
 
 Controles possuem foco visível. Cores complementam rótulos, nunca substituem valores. O movimento fica restrito a transições discretas e respeita a preferência de movimento reduzido.
 
+## Renda e celular
+
+A seção de renda diferencia visualmente o valor de um edital (fonte externa verificável), os valores digitados na simulação e a ausência de média por especialidade. Em celular, as especialidades viram cartões com todos os critérios e um botão de comparação de 40px; a tabela permanece para desktop.
+
 ## Data integrity
 
 Distribuição regional e bolsa são dados relatados pela pesquisa. O histograma de formação é calculado das 30 áreas. Faixas de carga semanal, potencial de qualidade de vida, absorção, telemedicina e exposição de tarefas à IA são avaliações analíticas; não são taxas oficiais. O relatório não oferece série comparável de renda total por especialidade.

@@ -951,5 +951,19 @@
       "evidence_type": "aproximado_no_relatorio",
       "report_citation_refs": "turn10search28"
     }
+  ],
+  "income_benchmarks": [
+    {
+      "id": "ebserh_2026_specialist_24h",
+      "label": "Cargo de médico especialista",
+      "employer": "Ebserh",
+      "geography": "Brasil",
+      "reference_year": 2026,
+      "monthly_gross_brl": 11464.35,
+      "weekly_hours": 24,
+      "specialty_scope": "Diversas especialidades do concurso nacional 01/2026",
+      "source_url": "https://conhecimento.fgv.br/sites/default/files/concursos/edital-no-02-area-medica-edital-retificado-1-30.01.2026.pdf",
+      "note": "Remuneração bruta anunciada para um vínculo de 24 horas semanais. Não representa renda média total, renda líquida nem garantia de vaga."
+    }
   ]
 }

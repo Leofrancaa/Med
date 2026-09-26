@@ -58,4 +58,22 @@ INSERT INTO public.market_indicators (metric, geography, reference_year, value, 
   ('enare_medical_applications_approx', 'Brasil', 2026, 98000, 'inscrições; ciclo 2026/27', 'aproximado_no_relatorio', 'turn10search28')
 ON CONFLICT (metric, geography, reference_year) DO UPDATE SET value = EXCLUDED.value, unit = EXCLUDED.unit, evidence_type = EXCLUDED.evidence_type, report_citation_refs = EXCLUDED.report_citation_refs;
 
+INSERT INTO public.income_benchmarks
+  (id, label, employer, geography, reference_year, monthly_gross_brl, weekly_hours, specialty_scope, source_url, note)
+VALUES
+  ('ebserh_2026_specialist_24h', 'Cargo de médico especialista', 'Ebserh', 'Brasil', 2026, 11464.35, 24,
+   'Diversas especialidades do concurso nacional 01/2026',
+   'https://conhecimento.fgv.br/sites/default/files/concursos/edital-no-02-area-medica-edital-retificado-1-30.01.2026.pdf',
+   'Remuneração bruta anunciada para um vínculo de 24 horas semanais. Não representa renda média total, renda líquida nem garantia de vaga.')
+ON CONFLICT (id) DO UPDATE SET
+  label = EXCLUDED.label,
+  employer = EXCLUDED.employer,
+  geography = EXCLUDED.geography,
+  reference_year = EXCLUDED.reference_year,
+  monthly_gross_brl = EXCLUDED.monthly_gross_brl,
+  weekly_hours = EXCLUDED.weekly_hours,
+  specialty_scope = EXCLUDED.specialty_scope,
+  source_url = EXCLUDED.source_url,
+  note = EXCLUDED.note;
+
 COMMIT;
