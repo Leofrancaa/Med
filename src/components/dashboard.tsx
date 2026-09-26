@@ -30,7 +30,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import type { DashboardData, Specialty } from "@/lib/data";
+import type { CostScenario, DashboardData, Specialty } from "@/lib/data";
 
 type Sort = "name" | "years" | "hours";
 const maxCompare = 3;
@@ -158,6 +158,33 @@ function HoursChart({ specialties }: { specialties: Specialty[] }) {
   );
 }
 
+function CostChart({ costs }: { costs: CostScenario[] }) {
+  const rows = costs.map((item) => ({
+    name: `Classe ${item.class_code}`,
+    value: Number(item.monthly_fixed_min_brl) / 1000,
+    range: item.monthly_fixed_max_brl === null ? `a partir de ${formatMoney(Number(item.monthly_fixed_min_brl))}` : `${formatMoney(Number(item.monthly_fixed_min_brl))}–${formatMoney(Number(item.monthly_fixed_max_brl))}`,
+    description: item.structure,
+  }));
+  return <section className="chart-card cost-card" aria-labelledby="cost-heading">
+    <div className="chart-heading"><div><h3 id="cost-heading">Custo fixo mensal de consultório</h3><p>Piso de quatro cenários indicativos em Salvador · R$ mil</p></div><span className="evidence-tag evidence-analytic">Cenário analítico</span></div>
+    <div className="cost-layout">
+      <div className="chart-canvas" role="img" aria-label={rows.map((row) => `${row.name}: piso de ${formatMoney(row.value * 1000)} por mês`).join("; ")}>
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={rows} layout="vertical" margin={{ top: 2, right: 28, bottom: 0, left: 2 }} barCategoryGap={17}>
+            <CartesianGrid horizontal={false} stroke="#e8eef3" />
+            <XAxis type="number" domain={[0, 80]} tickLine={false} axisLine={false} tick={{ fill: "#81909f", fontSize: 11 }} tickFormatter={(value: number) => `${value} mil`} />
+            <YAxis type="category" dataKey="name" width={72} tickLine={false} axisLine={false} tick={{ fill: "#425369", fontSize: 11 }} />
+            <Tooltip cursor={{ fill: "#f4f8fc" }} formatter={(value) => [formatMoney(Number(value) * 1000), "Piso mensal"]} />
+            <Bar dataKey="value" fill="#55a6bb" radius={[0, 4, 4, 0]} maxBarSize={19}><LabelList dataKey="value" position="right" formatter={(value: unknown) => `${Number(value)} mil`} style={{ fontSize: 11, fill: "#425369" }} /></Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="cost-legend">{rows.map((row) => <div key={row.name}><strong>{row.name}</strong><span>{row.description}</span><small>{row.range}</small></div>)}</div>
+    </div>
+    <p className="chart-footnote">Faixas indicativas de custo fixo, sem imóvel, pró-labore, impostos ou financiamento. O limite superior da classe D é aberto.</p>
+  </section>;
+}
+
 function SpecialtyTable({ specialties, selected, toggle }: { specialties: Specialty[]; selected: string[]; toggle: (slug: string) => void }) {
   return (
     <div className="table-scroll">
@@ -252,6 +279,7 @@ export function Dashboard({ data }: { data: DashboardData }) {
         <div className="section-header"><div><span className="section-overline">Contexto em números</span><h2 id="data-heading">O que os dados mostram</h2><p>Gráficos com medidas disponíveis. Sem simular renda ou empregabilidade.</p></div></div>
         <div className="chart-grid"><RegionChart data={data} /><TrainingChart specialties={data.specialties} /></div>
         <HoursChart specialties={filtered} />
+        <CostChart costs={data.costs} />
       </section>
 
       <section className="explorer-section" id="especialidades" aria-labelledby="specialties-heading">
