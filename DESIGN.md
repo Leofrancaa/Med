@@ -53,7 +53,7 @@ Controles possuem foco visível. Cores complementam rótulos, nunca substituem v
 
 ## Renda e celular
 
-A seção de renda diferencia visualmente o valor de um edital, as médias líquidas autodeclaradas por especialidade com ano e amostra, os valores digitados na simulação e a ausência de média individual publicada. Em celular, as especialidades viram cartões com todos os critérios e um botão de comparação de 40px; a tabela de renda permite rolagem horizontal.
+A seção de renda diferencia visualmente o valor de um edital, as médias líquidas autodeclaradas por especialidade com ano e amostra, seu equivalente em poder de compra pelo IPCA e os cenários ajustados pelo usuário. A ausência de média individual permanece explícita. Em celular, as especialidades viram cartões com todos os critérios e um botão de comparação de 40px; a tabela de renda permite rolagem horizontal.
 
 ## Data integrity
 

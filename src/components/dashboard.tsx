@@ -34,6 +34,7 @@ import {
 import type { CostScenario, DashboardData, Specialty } from "@/lib/data";
 import { ServiceEarnings } from "@/components/service-earnings";
 import { MonthlyIncome } from "@/components/monthly-income";
+import { inflationFactorForYear } from "@/lib/inflation";
 
 type Sort = "name" | "years" | "hours";
 const maxCompare = 3;
@@ -271,7 +272,7 @@ function SpecialtyTable({ specialties, selected, toggle }: { specialties: Specia
   );
 }
 
-function Comparison({ selected, incomeSurveys, remove, clear }: { selected: Specialty[]; incomeSurveys: DashboardData["specialtyIncomeSurveys"]; remove: (slug: string) => void; clear: () => void }) {
+function Comparison({ selected, incomeSurveys, inflationIndex, remove, clear }: { selected: Specialty[]; incomeSurveys: DashboardData["specialtyIncomeSurveys"]; inflationIndex: DashboardData["inflationIndex"]; remove: (slug: string) => void; clear: () => void }) {
   const latestIncome = new Map<string, DashboardData["specialtyIncomeSurveys"][number]>();
   [...incomeSurveys].sort((a, b) => b.reference_year - a.reference_year).forEach((row) => { if (row.specialty_slug && !latestIncome.has(row.specialty_slug)) latestIncome.set(row.specialty_slug, row); });
   const rows: { label: string; value: (item: Specialty) => string }[] = [
@@ -282,7 +283,7 @@ function Comparison({ selected, incomeSurveys, remove, clear }: { selected: Spec
     { label: "Telemedicina", value: (item) => item.telemedicine_potential },
     { label: "Exposição de tarefas à IA", value: (item) => item.ai_task_exposure },
     { label: "Capital próprio necessário", value: (item) => item.capital_requirement },
-    { label: "Renda líquida mensal (Afya)", value: (item) => { const row = latestIncome.get(item.slug); return row ? `${formatMoney(Number(row.mean_net_monthly_brl))} · ${row.reference_year}` : "Sem média publicada"; } },
+    { label: "Equivalente mensal pelo IPCA", value: (item) => { const row = latestIncome.get(item.slug); const factor = row ? inflationFactorForYear(inflationIndex, row.reference_year) : null; return row && factor ? `${formatMoney(Number(row.mean_net_monthly_brl) * factor)} · base ${row.reference_year}` : "Sem média publicada"; } },
   ];
   return (
     <section id="comparar" className="compare-section">
@@ -339,7 +340,7 @@ export function Dashboard({ data }: { data: DashboardData }) {
       </section>
 
       <IncomeSection data={data} />
-      <MonthlyIncome specialties={data.specialties} surveys={data.specialtyIncomeSurveys} />
+      <MonthlyIncome specialties={data.specialties} surveys={data.specialtyIncomeSurveys} inflationIndex={data.inflationIndex} inflationSource={data.inflationSource} regions={data.incomeRegions} />
       <ServiceEarnings specialties={data.specialties} benchmarks={data.serviceBenchmarks} />
 
       <section className="charts-section" aria-labelledby="data-heading">
@@ -362,11 +363,11 @@ export function Dashboard({ data }: { data: DashboardData }) {
         <p className="table-note">* Avaliações qualitativas ou estimativas do relatório; não são taxas oficiais. A duração deve ser confirmada por programa.</p>
       </section>
 
-      <Comparison selected={selectedItems} incomeSurveys={data.specialtyIncomeSurveys} remove={toggle} clear={() => setSelected([])} />
+      <Comparison selected={selectedItems} incomeSurveys={data.specialtyIncomeSurveys} inflationIndex={data.inflationIndex} remove={toggle} clear={() => setSelected([])} />
 
-      <section className="method-section" id="metodologia"><div className="section-header"><div><span className="section-overline">Transparência</span><h2>Como ler este painel</h2><p>O relatório combina dados publicados, cenários construídos e lacunas que importam para a decisão.</p></div></div><div className="method-cards"><div><span className="method-dot blue" /><h3>Dado relatado</h3><p>A Afya publicou médias de renda líquida declarada para nove áreas deste painel em 2022–2023. O exemplo de remuneração vem de um edital oficial de 2026. Valores por ato vêm da ANS e não são renda do médico.</p></div><div><span className="method-dot teal" /><h3>Estimativa analítica</h3><p>Faixas de horas, absorção, IA e qualidade de vida descrevem tendências de trabalho, sem precisão estatística. As simulações de renda dependem dos volumes, repasses e custos informados.</p></div><div><span className="method-dot gray" /><h3>Não especificado</h3><p>As demais 21 áreas não têm média individual de renda líquida publicada nas pesquisas consultadas. Empregabilidade, prazo até contratação, nota de corte nacional e burnout também não têm série suficiente.</p></div></div></section>
+      <section className="method-section" id="metodologia"><div className="section-header"><div><span className="section-overline">Transparência</span><h2>Como ler este painel</h2><p>O relatório combina dados publicados, cenários construídos e lacunas que importam para a decisão.</p></div></div><div className="method-cards"><div><span className="method-dot blue" /><h3>Dado relatado</h3><p>A Afya publicou médias de renda líquida declarada para nove áreas em 2022–2023. O IPCA do IBGE atualiza seu poder de compra. O exemplo de remuneração vem de um edital oficial de 2026; valores por ato vêm da ANS.</p></div><div><span className="method-dot teal" /><h3>Estimativa analítica</h3><p>Os ajustes de mercado, região, experiência e jornada são hipóteses escolhidas pelo usuário. Faixas de horas, absorção, IA e qualidade de vida descrevem tendências, sem precisão estatística.</p></div><div><span className="method-dot gray" /><h3>Não especificado</h3><p>As demais 21 áreas não têm média individual de renda líquida publicada nas pesquisas consultadas. Também não há coeficientes por especialidade para quantificar fatores além da inflação.</p></div></div></section>
 
-      <footer className="page-footer"><span>Med · Pesquisa organizada para escolha de residência</span><span>{formatNumber(data.specialties.length)} áreas · dados de referência 2024–2026</span></footer>
+      <footer className="page-footer"><span>Med · Pesquisa organizada para escolha de residência</span><span>{formatNumber(data.specialties.length)} áreas · dados de referência 2022–2026</span></footer>
     </main>
   </div>;
 }

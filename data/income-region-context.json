@@ -1,0 +1,7 @@
+[
+  {"region":"Norte","reference_year":2023,"mean_net_monthly_brl":25518,"respondent_count":140},
+  {"region":"Centro-Oeste","reference_year":2023,"mean_net_monthly_brl":24975,"respondent_count":193},
+  {"region":"Nordeste","reference_year":2023,"mean_net_monthly_brl":23198,"respondent_count":491},
+  {"region":"Sul","reference_year":2023,"mean_net_monthly_brl":22895,"respondent_count":444},
+  {"region":"Sudeste","reference_year":2023,"mean_net_monthly_brl":22212,"respondent_count":1206}
+]

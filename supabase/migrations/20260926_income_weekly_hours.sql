@@ -1,0 +1,22 @@
+-- Afya 2023 chart 41 and Afya 2022 chart 55: average weekly hours in each survey subgroup.
+BEGIN;
+ALTER TABLE public.specialty_income_surveys ADD COLUMN IF NOT EXISTS mean_weekly_hours numeric(4,1) CHECK (mean_weekly_hours > 0 AND mean_weekly_hours <= 100);
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 67.9 WHERE id = '2023-medicina-intensiva';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 52.1 WHERE id = '2023-cardiologia';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 48.5 WHERE id = '2023-ginecologia-e-obstetricia';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 47.2 WHERE id = '2023-psiquiatria';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 50.4 WHERE id = '2023-pediatria';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 45.9 WHERE id = '2023-endocrinologia-e-metabologia';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 55.9 WHERE id = '2023-clinica-medica';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 48.1 WHERE id = '2023-medicina-de-familia-e-comunidade';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 55.5 WHERE id = '2023-grupo-cirurgico';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 53.4 WHERE id = '2022-cardiologia';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 56.4 WHERE id = '2022-ginecologia-e-obstetricia';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 44.3 WHERE id = '2022-endocrinologia-e-metabologia';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 48.6 WHERE id = '2022-psiquiatria';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 53.8 WHERE id = '2022-pediatria';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 44.4 WHERE id = '2022-dermatologia';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 47.9 WHERE id = '2022-medicina-de-familia-e-comunidade';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 54.7 WHERE id = '2022-clinica-medica';
+UPDATE public.specialty_income_surveys SET mean_weekly_hours = 64.1 WHERE id = '2022-grupo-cirurgico';
+COMMIT;
