@@ -84,4 +84,24 @@ CREATE POLICY "Dashboard read clinic costs" ON public.clinic_cost_scenarios FOR 
 CREATE POLICY "Dashboard read indicators" ON public.market_indicators FOR SELECT TO anon, authenticated USING (true);
 CREATE POLICY "Dashboard read income benchmarks" ON public.income_benchmarks FOR SELECT TO anon, authenticated USING (true);
 
+CREATE TABLE IF NOT EXISTS public.specialty_service_benchmarks (
+  specialty_slug text NOT NULL REFERENCES public.specialties(slug),
+  category text NOT NULL CHECK (category IN ('consulta', 'procedimento', 'cirurgia_intervencao')),
+  tuss_code text NOT NULL CHECK (tuss_code ~ '^[0-9]{8}$'),
+  service_name text NOT NULL,
+  cbo_code text NOT NULL CHECK (cbo_code ~ '^[0-9]{6}$'),
+  median_reported_brl numeric(12,2) NOT NULL CHECK (median_reported_brl > 0),
+  sample_size integer NOT NULL CHECK (sample_size > 0),
+  geography text NOT NULL,
+  reference_month date NOT NULL,
+  source_url text NOT NULL,
+  PRIMARY KEY (specialty_slug, category, tuss_code)
+);
+CREATE INDEX IF NOT EXISTS specialty_service_benchmarks_specialty_idx ON public.specialty_service_benchmarks (specialty_slug);
+ALTER TABLE public.specialty_service_benchmarks ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON public.specialty_service_benchmarks FROM anon, authenticated;
+GRANT SELECT ON public.specialty_service_benchmarks TO anon, authenticated;
+DROP POLICY IF EXISTS "Dashboard read service benchmarks" ON public.specialty_service_benchmarks;
+CREATE POLICY "Dashboard read service benchmarks" ON public.specialty_service_benchmarks FOR SELECT TO anon, authenticated USING (true);
+
 COMMIT;

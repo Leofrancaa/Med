@@ -32,6 +32,7 @@ import {
   YAxis,
 } from "recharts";
 import type { CostScenario, DashboardData, Specialty } from "@/lib/data";
+import { ServiceEarnings } from "@/components/service-earnings";
 
 type Sort = "name" | "years" | "hours";
 const maxCompare = 3;
@@ -61,6 +62,7 @@ function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen: boolean; setMobile
   const links = [
     { href: "#visao-geral", label: "Visão geral", icon: BarChart3 },
     { href: "#renda", label: "Renda", icon: Wallet },
+    { href: "#producao", label: "Por atendimento", icon: BarChart3 },
     { href: "#especialidades", label: "Especialidades", icon: GraduationCap },
     { href: "#comparar", label: "Comparar", icon: SlidersHorizontal },
     { href: "#metodologia", label: "Metodologia", icon: CircleHelp },
@@ -333,6 +335,7 @@ export function Dashboard({ data }: { data: DashboardData }) {
       </section>
 
       <IncomeSection data={data} />
+      <ServiceEarnings specialties={data.specialties} benchmarks={data.serviceBenchmarks} />
 
       <section className="charts-section" aria-labelledby="data-heading">
         <div className="section-header"><div><span className="section-overline">Contexto em números</span><h2 id="data-heading">O que os dados mostram</h2><p>Gráficos com medidas disponíveis. Sem simular renda ou empregabilidade.</p></div></div>
@@ -356,7 +359,7 @@ export function Dashboard({ data }: { data: DashboardData }) {
 
       <Comparison selected={selectedItems} remove={toggle} clear={() => setSelected([])} />
 
-      <section className="method-section" id="metodologia"><div className="section-header"><div><span className="section-overline">Transparência</span><h2>Como ler este painel</h2><p>O relatório combina dados publicados, cenários construídos e lacunas que importam para a decisão.</p></div></div><div className="method-cards"><div><span className="method-dot blue" /><h3>Dado relatado</h3><p>Valores com localidade, ano e unidade, como bolsa e distribuição regional. O exemplo de remuneração vem de um edital oficial de 2026, indicado na seção de renda.</p></div><div><span className="method-dot teal" /><h3>Estimativa analítica</h3><p>Faixas de horas, absorção, IA e qualidade de vida descrevem tendências de trabalho, sem precisão estatística. A simulação de renda usa apenas os valores digitados.</p></div><div><span className="method-dot gray" /><h3>Não especificado</h3><p>Renda total comparável por especialidade, empregabilidade, prazo até contratação, nota de corte nacional e burnout não têm série suficiente nesta pesquisa.</p></div></div></section>
+      <section className="method-section" id="metodologia"><div className="section-header"><div><span className="section-overline">Transparência</span><h2>Como ler este painel</h2><p>O relatório combina dados publicados, cenários construídos e lacunas que importam para a decisão.</p></div></div><div className="method-cards"><div><span className="method-dot blue" /><h3>Dado relatado</h3><p>Valores com localidade, ano e unidade, como bolsa e distribuição regional. O exemplo de remuneração vem de um edital oficial de 2026. Valores por ato vêm da ANS e não são renda do médico.</p></div><div><span className="method-dot teal" /><h3>Estimativa analítica</h3><p>Faixas de horas, absorção, IA e qualidade de vida descrevem tendências de trabalho, sem precisão estatística. As simulações de renda dependem dos volumes, repasses e custos informados.</p></div><div><span className="method-dot gray" /><h3>Não especificado</h3><p>Renda total comparável por especialidade, empregabilidade, prazo até contratação, nota de corte nacional e burnout não têm série suficiente nesta pesquisa.</p></div></div></section>
 
       <footer className="page-footer"><span>Med · Pesquisa organizada para escolha de residência</span><span>{formatNumber(data.specialties.length)} áreas · dados de referência 2024–2026</span></footer>
     </main>
