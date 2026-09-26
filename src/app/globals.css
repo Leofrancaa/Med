@@ -160,6 +160,7 @@ h1{font-size:clamp(27px,2.55vw,39px);line-height:1.18;letter-spacing:-.055em;fon
 .service-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
 .service-panel-head h3{display:flex;align-items:center;gap:8px;font-size:15px;letter-spacing:-.02em;margin:0 0 5px;color:#203650}
 .service-panel-head p{font-size:11px;color:#8a99a9;margin:0;line-height:1.5}
+.service-clarification{display:flex;align-items:flex-start;gap:9px;background:#fff8ed;border:1px solid #f1dcb9;border-radius:8px;padding:11px 12px;margin-bottom:17px;color:#805f31}.service-clarification svg{flex:0 0 auto;margin-top:1px}.service-clarification p{font-size:11px;line-height:1.5;margin:0}.service-clarification strong{color:#684717}
 .service-chart{height:220px;margin:23px 0 12px}
 .service-no-data{min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;text-align:center;color:#7f92a5}
 .service-no-data strong{font-size:12px;color:#53687f}.service-no-data p{font-size:11px;margin:0}
