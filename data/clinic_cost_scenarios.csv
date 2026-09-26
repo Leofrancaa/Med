@@ -1,0 +1,5 @@
+﻿class_code,structure,investment_min_brl,investment_max_brl,monthly_fixed_min_brl,monthly_fixed_max_brl
+A,sala compartilhada / consultório básico,25000,80000,8000,20000
+B,consultório próprio bem equipado,80000,200000,15000,35000
+C,procedimentos/diagnóstico intermediário,200000,800000,30000,80000
+D,centro diagnóstico/laboratório/equipamento pesado,800000,,80000,

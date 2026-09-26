@@ -1,0 +1,16 @@
+﻿metric,geography,reference_year,value,unit,evidence_type,report_citation_refs
+specialist_physicians,Brasil,2024,353287,pessoas,observado_no_relatorio,turn21view2;turn22view0
+specialist_share,Brasil,2024,59.1,% dos médicos,observado_no_relatorio,turn21view2;turn22view0
+specialist_region_share,Sudeste,2025,55.4,% dos especialistas,observado_no_relatorio,turn22view0
+specialist_region_share,Sul,2025,16.7,% dos especialistas,observado_no_relatorio,turn22view0
+specialist_region_share,Nordeste,2025,14.5,% dos especialistas,observado_no_relatorio,turn22view0
+specialist_region_share,Centro-Oeste,2025,7.5,% dos especialistas,observado_no_relatorio,turn22view0
+specialist_region_share,Norte,2025,5.9,% dos especialistas,observado_no_relatorio,turn22view0
+selected_specialists_federal_program,Bahia,2025,48,pessoas,observado_no_relatorio,turn22view1
+selected_specialists_federal_program,Brasil,2025,501,pessoas,observado_no_relatorio,turn22view1
+resident_monthly_stipend_gross,Brasil,2026,4106.09,BRL/mês,observado_no_relatorio,turn17search0
+resident_max_weekly_hours,Brasil,2026,60,horas/semana,observado_no_relatorio,turn16view1
+resident_max_on_call_hours,Brasil,2026,24,horas/semana,observado_no_relatorio,turn16view1
+annual_new_cancer_cases_estimate,Brasil,2026,781000,casos/ano,estimativa_fonte_no_relatorio,turn21view1
+enare_medical_vacancies,Brasil,2026,8287,vagas; ciclo 2026/27,observado_no_relatorio,turn10search24
+enare_medical_applications_approx,Brasil,2026,98000,inscrições; ciclo 2026/27,aproximado_no_relatorio,turn10search28
