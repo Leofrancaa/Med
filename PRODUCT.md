@@ -28,6 +28,7 @@ O usuário explora 30 especialidades e pode consultar cenários de custo de cons
 - Interface em português do Brasil, adaptada a celular e desktop.
 - Leitura pública do banco Supabase com RLS; alterações de dados são administrativas e não fazem parte do dashboard.
 - Mostrar renda média líquida por especialidade somente quando publicada em pesquisa identificável, com ano e tamanho do recorte. Manter ausentes as áreas sem média individual. Um edital com salário bruto e jornada pode servir de exemplo de vínculo, desde que sua origem e seus limites apareçam juntos.
+- Oferecer a mediana de remuneração de um vínculo formal RAIS 2025 como medida complementar, distinguindo-a da renda líquida total. O recorte de 40–44 h/semana cobre 29 ocupações correspondentes; Medicina de Emergência não recebeu valor artificial.
 - Atualizar as médias publicadas pelo IPCA oficial até o último mês divulgado e exibir o mês-base. Ajustes de mercado, região, carreira e jornada são cenários preenchidos pelo usuário, sem coeficientes inferidos a partir de agregados.
 - Custos de consultório são cenários analíticos de Salvador em valores nominais de 2026, sem imóvel, pró-labore, impostos e financiamento.
 - Nunca colocar a senha do banco no repositório nem no cliente web.

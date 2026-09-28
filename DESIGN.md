@@ -53,8 +53,8 @@ Controles possuem foco visível. Cores complementam rótulos, nunca substituem v
 
 ## Renda e celular
 
-A seção de renda diferencia visualmente o valor de um edital, as médias líquidas autodeclaradas por especialidade com ano e amostra, seu equivalente em poder de compra pelo IPCA e os cenários ajustados pelo usuário. A ausência de média individual permanece explícita. Em celular, as especialidades viram cartões com todos os critérios e um botão de comparação de 40px; a tabela de renda permite rolagem horizontal.
+A seção de renda diferencia visualmente o valor de um edital, as médias líquidas autodeclaradas por especialidade com ano e amostra, seu equivalente em poder de compra pelo IPCA e os cenários ajustados pelo usuário. A mediana salarial da RAIS aparece em seção complementar verde água, sempre rotulada como um vínculo formal de 40–44 h/semana e nunca como renda total. A ausência de média individual permanece explícita. Em celular, as especialidades viram cartões com todos os critérios e um botão de comparação de 40px; as tabelas de renda permitem rolagem horizontal.
 
 ## Data integrity
 
-Distribuição regional e bolsa são dados relatados pela pesquisa. O histograma de formação é calculado das 30 áreas. Faixas de carga semanal, potencial de qualidade de vida, absorção, telemedicina e exposição de tarefas à IA são avaliações analíticas; não são taxas oficiais. As pesquisas Afya cobrem individualmente nove das 30 áreas do painel, em 2022–2023. A média do grupo cirúrgico permanece separada das especialidades. As demais áreas não recebem valor inferido.
+Distribuição regional e bolsa são dados relatados pela pesquisa. O histograma de formação é calculado das 30 áreas. Faixas de carga semanal, potencial de qualidade de vida, absorção, telemedicina e exposição de tarefas à IA são avaliações analíticas; não são taxas oficiais. As pesquisas Afya cobrem individualmente nove das 30 áreas do painel, em 2022–2023. A média do grupo cirúrgico permanece separada das especialidades. A RAIS 2025 fornece mediana salarial de um vínculo formal para 29 ocupações; isso não substitui a média de renda líquida total ausente nas outras áreas.

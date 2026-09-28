@@ -3,6 +3,7 @@ import serviceSnapshot from "../../data/service-benchmarks.json";
 import surveySnapshot from "../../data/specialty-income-surveys.json";
 import ipcaSnapshot from "../../data/ipca-index-monthly.json";
 import regionSnapshot from "../../data/income-region-context.json";
+import formalJobSnapshot from "../../data/formal-job-rais-2025.json";
 
 export type Specialty = (typeof snapshot.specialties)[number];
 export type CostScenario = (typeof snapshot.clinic_cost_scenarios)[number];
@@ -12,6 +13,7 @@ export type ServiceBenchmark = (typeof serviceSnapshot)[number];
 export type SpecialtyIncomeSurvey = (typeof surveySnapshot)[number] & { source_url?: string };
 export type IpcaIndex = (typeof ipcaSnapshot)[number];
 export type IncomeRegionContext = (typeof regionSnapshot)[number];
+export type FormalJobBenchmark = (typeof formalJobSnapshot)[number];
 
 export type DashboardData = {
   specialties: Specialty[];
@@ -23,6 +25,7 @@ export type DashboardData = {
   inflationIndex: IpcaIndex[];
   inflationSource: "ibge" | "supabase" | "snapshot";
   incomeRegions: IncomeRegionContext[];
+  formalJobBenchmarks: FormalJobBenchmark[];
   source: "supabase" | "snapshot";
   warning?: string;
 };
@@ -36,6 +39,7 @@ const tableOrder = {
   specialty_income_surveys: "reference_year.desc,mean_net_monthly_brl.desc",
   ipca_index_monthly: "month.asc",
   income_region_context: "mean_net_monthly_brl.desc",
+  specialty_formal_job_rais: "specialty_slug.asc",
 } as const;
 
 async function fetchOfficialInflationIndex(): Promise<IpcaIndex[]> {
@@ -91,13 +95,14 @@ export async function getDashboardData(): Promise<DashboardData> {
       inflationIndex: inflation.rows,
       inflationSource: inflation.source,
       incomeRegions: regionSnapshot,
+      formalJobBenchmarks: formalJobSnapshot,
       source: "snapshot",
       warning: "Exibindo a cópia dos dados incluída no projeto. Configure a conexão Supabase para atualizar o painel.",
     };
   }
 
   try {
-    const [specialties, costs, indicators, incomeBenchmarks, serviceBenchmarks, specialtyIncomeSurveys, storedInflation, incomeRegions] = await Promise.all([
+    const [specialties, costs, indicators, incomeBenchmarks, serviceBenchmarks, specialtyIncomeSurveys, storedInflation, incomeRegions, formalJobBenchmarks] = await Promise.all([
       fetchTable<Specialty>("specialties", url, key),
       fetchTable<CostScenario>("clinic_cost_scenarios", url, key),
       fetchTable<MarketIndicator>("market_indicators", url, key),
@@ -106,10 +111,11 @@ export async function getDashboardData(): Promise<DashboardData> {
       fetchTable<SpecialtyIncomeSurvey>("specialty_income_surveys", url, key),
       fetchTable<IpcaIndex>("ipca_index_monthly", url, key),
       fetchTable<IncomeRegionContext>("income_region_context", url, key),
+      fetchTable<FormalJobBenchmark>("specialty_formal_job_rais", url, key),
     ]);
 
     const inflation = inflationFrom(storedInflation, "supabase");
-    return { specialties, costs, indicators, incomeBenchmarks, serviceBenchmarks, specialtyIncomeSurveys, inflationIndex: inflation.rows, inflationSource: inflation.source, incomeRegions, source: "supabase" };
+    return { specialties, costs, indicators, incomeBenchmarks, serviceBenchmarks, specialtyIncomeSurveys, inflationIndex: inflation.rows, inflationSource: inflation.source, incomeRegions, formalJobBenchmarks, source: "supabase" };
   } catch {
     const inflation = inflationFrom(ipcaSnapshot, "snapshot");
     return {
@@ -122,6 +128,7 @@ export async function getDashboardData(): Promise<DashboardData> {
       inflationIndex: inflation.rows,
       inflationSource: inflation.source,
       incomeRegions: regionSnapshot,
+      formalJobBenchmarks: formalJobSnapshot,
       source: "snapshot",
       warning: "O Supabase está indisponível agora. O painel mostra a cópia de 26/09/2026.",
     };

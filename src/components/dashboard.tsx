@@ -34,6 +34,7 @@ import {
 import type { CostScenario, DashboardData, Specialty } from "@/lib/data";
 import { ServiceEarnings } from "@/components/service-earnings";
 import { MonthlyIncome } from "@/components/monthly-income";
+import { FormalIncome } from "@/components/formal-income";
 import { inflationFactorForYear } from "@/lib/inflation";
 
 type Sort = "name" | "years" | "hours";
@@ -341,6 +342,7 @@ export function Dashboard({ data }: { data: DashboardData }) {
 
       <IncomeSection data={data} />
       <MonthlyIncome specialties={data.specialties} surveys={data.specialtyIncomeSurveys} inflationIndex={data.inflationIndex} inflationSource={data.inflationSource} regions={data.incomeRegions} />
+      <FormalIncome specialties={data.specialties} rows={data.formalJobBenchmarks} />
       <ServiceEarnings specialties={data.specialties} benchmarks={data.serviceBenchmarks} />
 
       <section className="charts-section" aria-labelledby="data-heading">
@@ -365,7 +367,7 @@ export function Dashboard({ data }: { data: DashboardData }) {
 
       <Comparison selected={selectedItems} incomeSurveys={data.specialtyIncomeSurveys} inflationIndex={data.inflationIndex} remove={toggle} clear={() => setSelected([])} />
 
-      <section className="method-section" id="metodologia"><div className="section-header"><div><span className="section-overline">Transparência</span><h2>Como ler este painel</h2><p>O relatório combina dados publicados, cenários construídos e lacunas que importam para a decisão.</p></div></div><div className="method-cards"><div><span className="method-dot blue" /><h3>Dado relatado</h3><p>A Afya publicou médias de renda líquida declarada para nove áreas em 2022–2023. O IPCA do IBGE atualiza seu poder de compra. O exemplo de remuneração vem de um edital oficial de 2026; valores por ato vêm da ANS.</p></div><div><span className="method-dot teal" /><h3>Estimativa analítica</h3><p>Os ajustes de mercado, região, experiência e jornada são hipóteses escolhidas pelo usuário. Faixas de horas, absorção, IA e qualidade de vida descrevem tendências, sem precisão estatística.</p></div><div><span className="method-dot gray" /><h3>Não especificado</h3><p>As demais 21 áreas não têm média individual de renda líquida publicada nas pesquisas consultadas. Também não há coeficientes por especialidade para quantificar fatores além da inflação.</p></div></div></section>
+      <section className="method-section" id="metodologia"><div className="section-header"><div><span className="section-overline">Transparência</span><h2>Como ler este painel</h2><p>O relatório combina dados publicados, cenários construídos e lacunas que importam para a decisão.</p></div></div><div className="method-cards"><div><span className="method-dot blue" /><h3>Dado relatado</h3><p>A Afya publicou médias de renda líquida total declarada para nove áreas em 2022–2023. A RAIS 2025 acrescenta medianas de um vínculo formal para 29 áreas. São medidas diferentes. O IPCA atualiza o poder de compra das médias Afya.</p></div><div><span className="method-dot teal" /><h3>Estimativa analítica</h3><p>Os ajustes de mercado, região, experiência e jornada são hipóteses escolhidas pelo usuário. Faixas de horas, absorção, IA e qualidade de vida descrevem tendências, sem precisão estatística.</p></div><div><span className="method-dot gray" /><h3>Não especificado</h3><p>As demais 21 áreas não têm média individual de renda líquida total publicada nas pesquisas consultadas. A mediana formal não preenche essa lacuna. Medicina de Emergência ainda não aparece no recorte RAIS 2025 com código próprio.</p></div></div></section>
 
       <footer className="page-footer"><span>Med · Pesquisa organizada para escolha de residência</span><span>{formatNumber(data.specialties.length)} áreas · dados de referência 2022–2026</span></footer>
     </main>
